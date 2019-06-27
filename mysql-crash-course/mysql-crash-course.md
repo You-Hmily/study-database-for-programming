@@ -31,3 +31,24 @@
               输入help或\h获取帮助 如 help select（获取使用select的帮助）
               输入quit 或 exit退出命令行实用程序
            2、MySQL Administrator
+              
+           3、MySQL Query Browser 
+           
+##3、使用MySQL
+    1、连接
+    2、选择数据库
+       关键字（key word）：作为MySQL语言组成部分的一个保留字。决不要用关键字命名一个表或列。
+       使用test数据库，应输入： USE test 
+    3、了解数据库和表
+       查看数据库列表：SHOW DATABASES
+       查看数据库内表的列表：SHOW TABLES
+       查询表的表列：SHOW COLUMNS FROM TABLE
+       用于显示广泛的服务器状态信息：SHOW STATUS
+       显示创建特定数据库或表的MySQL语句：SHOW CREATE DATABASE 和 SHOW CREATE TABLE
+       显示授予用户的安全权限：SHOW GRANTS
+       显示服务器错误或者警告：SHOW ERRORS 和 SHOW WARNING
+       
+##4、检索数据
+    1、SELECT语句
+    2、检索单个列
+       
