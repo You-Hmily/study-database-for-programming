@@ -71,4 +71,33 @@
        
 ##5、排序检索数据
     1、排序数据
-    2、
+    SELECT prod_name FROM products ORDER BY prod_name;
+    2、按多个列排序
+    SELECT prod_id,prod_price,prod_name FROM products ORDER BY prod_price , prod_name;
+    3、指定排序方向
+    SELECT prod_id,prod_price,prod_name FROM prosucts ORDER BY prod_price DESC;
+    SELECT prod_id,prod_price,prod_name FROM prosucts ORDER BY prod_price DESC,prod_name;
+    
+##6、过滤数据
+    1、使用WHERE子句
+    SELECT prod_name,prod_price FROM products WHERE prod_price=2.50;
+    
+    2、WHERE 子句操作符
+       =  ：等于
+       <> ：不等于
+       != ：不等于
+       <  ：小于
+       <= ：小于等于
+       >  ：大于
+       >= ：大于等于
+       BETWEEN : 在指定的两个值之间
+       检查单个值：SELECT prod_name,prod_price WHERE prod_name=‘fuses’
+       不匹配检查：SELECT vend_id,prod_name FROM products WHERE vend_id<>1003;
+                  SELECT vend_id,prod_name FROM products WHERE vend_id != 1003;
+       范围值检查：SELECT prod_name,prod_price FROM products WHERE prod_price BETWEEN 5 and 10;// 取值范围包括开始值和结束值
+       空值检查： NULL 无值，它与字段包含0、空字符串或仅仅包含空格不同
+                 SELECT prod_name FROM products WHERE prod_price IS NULL;
+
+##7、数据过滤
+    1、组合 WHERE 子句
+    2、IN 操作符                 
