@@ -50,5 +50,25 @@
        
 ##4、检索数据
     1、SELECT语句
+       SELECT * FROM TEST
     2、检索单个列
+       SELECT prod_name FROM products
+    3、检索多列
+       SELECT prod_id,prod_name FROM products
+    4、检索所有列
+       SELECT * FROM products
+    5、检索不同的行
+       SELECT DISTINCT vend_id FROM products
+    6、限制结果
+       SELECT prod_name FROM products LIMIT 5; //显示不多余5条记录
        
+       SELECT prod_name FROM products LIMIT 5,5;//显示 第五行开始的5行记录
+       
+    7、使用完全限定的表名
+       SELECT products.prod_name FROM products;
+       SELECT products.prod_name FROM crashcourse.products;
+    
+       
+##5、排序检索数据
+    1、排序数据
+    2、
