@@ -100,4 +100,69 @@
 
 ##7、数据过滤
     1、组合 WHERE 子句
-    2、IN 操作符                 
+       AND 操作符 ：SELECT prod_id,prod_price,prod_name FROM products WhHERE vend_id=1003 AND prod_price<=10;
+       OR 操作符：SELECT prod_id,prod_price,prod_name FROM products WhHERE vend_id=1002 OR vend_id=1003;
+       
+    2、IN 操作符---用来指定条件范围，范围中的每个条件都可以进行匹配。
+       SELECT prod_name,prod_price FROM products WHERE vend_id IN (1003,1004) ORDER BY prod_name;
+    3、NOT 操作符 ---否定之后所跟的任何条件。
+       SELECT prod_name,prod_price FROM products WHERE vend_in NOT IN (1002,1003) ORDER BY prod_name;
+       MySQL支持使用 NOT 对 IN、BETWEEN 和 EXISTS 子句取反。                        
+##8、用通配符进行过滤
+    1、LIKE 操作符
+       百分号（%）通配符：SELECT prod_id,prod_name FROM products WHERE prod_name LIKE 'jet%';// 以jet开头。匹配多个字符。
+                          SELECT prod_id,prod_name FROM products WHERE prod_name LIKE '%anvil%';
+       下划线（_）通配符：SELECT prod_id,prod_name FROM products WHERE prod_name LIKE '_ ton anvil';//下换线是匹配单个字符        
+    
+    2、使用通配符的技巧 
+       1、不要过度使用通配符，该操作能替代的情况下少用。
+       2、在确实需要使用通配符时，除非绝对有必要，否则不要把它们用到在搜索模式的开始处。
+       3、仔细注意通配符的位置。
+##9、用正则表达式进行搜索
+     1、正则表达式的使用
+         基本字符通配 REGEXP '1000'
+           SELECT prod_name FROM products WHERE prod_name REGEXP '1000' ORDER BY prod_name;
+           SELECT prod_name FROM products WHERE prod_name REGEXP '.000'; // .它表示匹配任意一个字符。
+         进行OR 匹配 使用 |
+           SELECT prod_name FROM products WHERE prod_name REGEXP '1000|2000';
+         匹配几个字符之一
+           SELECT prod_name FROM products WHERE prod_name REGEXP '[123] Tom';// 匹配1或2或3。
+         匹配范围
+           SELECT prod_name FROM products WHERE prod_name REGEXP '[1-5] Ton';// 匹配 1到5 的值
+         匹配特殊字符
+           SELECT prod_name FROM products WHERE prod_name REGEXP '.';// 匹配所有字符
+           SELECT prod_name FROM products WHERE prod_name REGEXP '//.';// 匹配 . 字符
+           为了匹配特殊字符，必须用\\ 为前导  \\-，\\.  。
+           \\f：换页，\\n：换行，\\r：回车，\\t：制表，\\v：纵向制表
+         匹配字符类：
+            [:alnum:]：任意字母和数字（同[a-zA-Z0-9]）
+            [:alpha:]：任意字符（同[a-zA-Z]）
+            [:blank:]：空格和制表（同[\\t]）
+            [:cntrl:]：ASCII控制字符（ASCII 0到31和127）
+            [:digit:]：任意数字（同[0-9]）
+            [:graph:]：与[:print:]相同，但不包含空格
+            [:lower:]：任意小写字母（同[a-z]）
+            [:print:]：打印任意字符
+            [:punct:]：既不在[:alnum:]又不在[:cntrl:]中的任意字符
+            [:space:]：包括空格在内的任意空白字符（同[\\f\\n\\r\\t\\v]）
+            [:upper:]：任意大写字母（同[A-Z]）
+            [:xdigit:]：任意十六进制数字（同[a-fA-F0-9]）
+         匹配多个实例
+             *：0个或多个匹配
+             +：一个或多个匹配（等于{1,}）
+             ?：0个或1个匹配（等于{0,1}）
+             {n}：指定数目的匹配
+             {n,}：不少于指定数目的匹配
+             {n,m}：匹配数目的范围（m不超过255）
+             SELECT prod_name FROM products WHERE prod_name REGEXP '\\([0-9] sticks?\\)';
+             SELECT prod_name FROM products WHERE prod_name REGEXP '[[:DIGIT:]]{4}';匹配4位数字
+         定位符
+             ^：文本的开始
+             $：文本的结尾
+             [[:<:]]：词的开始
+             [[:>:]]：词的结尾
+             SELECT prod_name FROM products WHERE prod_name REFEXP '^[0-9\\.]';
+##创建计算字段
+    1、计算字段
+    2、拼接字段                                
+    
