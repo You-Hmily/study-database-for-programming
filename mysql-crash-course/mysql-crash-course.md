@@ -162,7 +162,31 @@
              [[:<:]]：词的开始
              [[:>:]]：词的结尾
              SELECT prod_name FROM products WHERE prod_name REFEXP '^[0-9\\.]';
-##创建计算字段
+##10、创建计算字段
     1、计算字段
-    2、拼接字段                                
+       字段（field）基本上与列（column）意思相同。
+       计算字段并不存在于数据库表中。计算字段是运行时在SELECT语句内创建的。
+    2、拼接字段
+       拼接（concatenate）将值联结到一起构成单个值。
+       在MySQL的SELECT 语句中，可使用 Concat() 函数来拼接两个列。
+       SELECT Concat(vend_name,'(',vend_country,')') AS vend_title FROM vendors ORDER BY vend_name;
+       AS vend_title 为使用别名的方法。
+    3、执行算术计算
+       SELECT prod_id,quantity,item_price,quantity*item_price AS expended_price FROM orderitems WHERE order_num=20005;
+        + ：加，- ：减，* ：乘，/ ：除 。
+       
+##11、使用数据处理函数
+    1、文本处理函数
+       SELECT vend_name,Upper(vend_name) AS vend_name_upcase FROM vendors ORDER BY vend_name;
+       Left()：返回串左边的字符
+       Length()：返回串的长度
+       Locate()：找出串的一个子串
+       Lower()：将串转化为小写
+       LTrime()：去掉串左边的空格
+       Right()：返回串右边的字符
+       RTrime()：去掉串右边的空格
+       Soundex()：返回串的Soundex值
+       Substring()：返回子串的字符
+       Upper()：将串转化为大写          
+                                       
     
