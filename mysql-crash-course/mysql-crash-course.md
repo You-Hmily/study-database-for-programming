@@ -188,5 +188,29 @@
        Soundex()：返回串的Soundex值
        Substring()：返回子串的字符
        Upper()：将串转化为大写          
-                                       
-    
+       SELECT cust_name,cust_contact FROM customers WHERE Soundx(cust_contact) = Soundex('Y Lie');
+    2、日期和时间处理函数
+       AddDate() 增加一个日期（天，周等）
+       AddTime() 增加一个时间（时，分等）
+       CurDate() 返回当前日期
+       CurTime() 返回当前时间
+       Date() 返回日期时间的的日期部分
+       DateDiff() 计算两个日期之差
+       Date_Add() 高度灵活的日期运算函数
+       Date_Format() 返回一个格式化日期或时间串
+       Now() 返回当前日期和时间
+       SELECT cust_id,order_num FROM orders WHERE Date(order_date) BETWEEN '2019-07-03' AND '2019-07-04';
+       
+    3、数值处理函数
+        Abs()： 返回一个数的绝对值
+        Cos()： 返回一个角度的余弦
+        Exp()： 返回一个数的指数值
+        Mod()： 返回除操作的余数
+        Pi()：  返回圆周率
+        Rand()：返回一个随机数字
+        Sin()： 返回一个角度的正弦
+        Sqrt()：返回一个数的平方根
+        Tan()： 返回一个角度的正切                                         
+ ##12、汇总数据   
+     1、聚集函数
+     
