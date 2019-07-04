@@ -213,4 +213,110 @@
         Tan()： 返回一个角度的正切                                         
  ##12、汇总数据   
      1、聚集函数
+     聚集函数（aggregate function）运行在行组上，计算和返回单个值的函数。
+     AVG()： 返回某列的平均数
+     COUNT()：返回某列的行数
+     MAX()：返回某列的最大值
+     MIN()：返回某列的最小值
+     SUM()：返回某列之和
+        1、AVG()函数
+        SELECT AVG(prod_price) AS avg_price FROM products;
+        // AVG()函数忽略列值为NULL的行。
+        
+        2、COUNT()函数
+        SELECT COUNT(*) AS num_cust FROM customers;
+        // 如果指定列名，则指定列的值为空的行被COUNT()函数忽略，但如果COUNT(*)，则不忽略。
+        
+        3、MAX()函数
+        SELECT MAX(prod_price) AS max_price FROM products;
+        // MAX()函数忽略列值为NULL的行。
+        
+        4、MIN()函数
+        SELECT MIN(prod_price) AS min_price FROM products;
+        // MIN()函数忽略列值为NULL的行。
+        
+        5、SUM()函数
+        SELECT SUM(quantity) AS items_ordered FROM orderitems WHERE order_num=20005
+        // SUM()函数忽略列值为NULL的行。
+      
+     2、聚集不同值
+        对所有的执行计算，指定ALL参数或不给参数
+        只包含不同的值，指定DISTINCT参数
+        SELECT AVG(DISTINCT prod_price) AS avg_price FROM products WHERE vend_id=1003; 
      
+     3、组合聚集函数
+        SELECT COUNT(*) AS num_items, MIN(prod_price) AS price_min,MAX(prod_price) AS price_max,AVG(prod_price) AS price_avg FROM products;
+## 13、分组数据
+    1、数据分组
+       GROUP BY 子句和 HAVING 子句
+    
+    2、创建分组
+       SELECT vend_id , COUNT(*) AS num_prods FROM products GROUP BY vend_id;
+          
+    3、过滤分组
+       HAVAING 子句过滤
+       SELECT cust_id,COUNT(*) AS orders FROM orders GROUP BY cust_id HAVING COUNT(*)>=2;
+       
+    4、分组和排序
+       ORDER BY ：排序产生的输出，任意列都可以使用，不一定需要
+       GROUP BY ：分组行。但输出可能不是分组的顺序；只可能使用选择列或者表达式列，而且必须使用每个选择列表达式，如果与聚集函数一起使用列，则必须使用。
+       SELECT order_num,SUM(quantity*item_price) AS ordertotal FROM orderitems GROUP BY order_num HAVING SUM(quantity*item_price) >=50 ORDER BY ordertotal DESC;
+
+    5、SELECT 子句顺序
+       SELECT 要返回的列或表达式 
+       FROM  从中检索数据的表
+       WHERE 行级过滤
+       GROUP BY 分组说明
+       HAVING 组级过滤
+       ORDER BY 输出排序顺序
+       LIMIT  要检索的行数    
+
+## 14、使用子句查询
+    1、子查询
+       查询（query）任何SQL语句都是查询。一般指SELECT 语句。
+    2、利用子查询进行过滤
+       SELECT cust_id FROM orders WHERE order_num IN (SELECT order_num FROM orderitems WHERE prod_id=1002);
+    3、作为计算字段使用子查询
+       SELECT cust_name,cust_state,(SELECT COUNT(*) FROM orders WHERE orders.cust_id=customer.cust_id) AS orders FROM customers ORDER BY cust_name;
+                         
+## 15、联结表
+    1、  联结
+         1、关系表
+            外键（foreign key）外键为某个时刻表中的一列，它包含另一个表的主键值，定义了两个表之间的关系。
+            可伸缩性（scale）能够适应不断增加的工作量而不失败。设计良好的数据库或应用程序称之为可伸缩性好。
+         2、创建联结
+            SELECT vend_name,prod_name,prod_price FROM vendors,products WHERE vendors.vend_id=products.vend_id ORDER BY vend_name,prod_name;
+            
+            笛卡尔积（caetesian product）由没有联结条件的表关系返回的结果为笛卡尔积。
+            
+            联结表越多，性能下降越厉害。 
+## 16、创建高级联结
+     1、使用别名
+        为了缩短SQL语句，允许在单条SELECT 语句中多次使用相同的表。
+     2、使用不同类型的联结
+        自联结
+        SELECT prod_id,prod_name FROM products WHERE vend_id=(SELECT vend_id FROM products WHERE prod_id='DTNTR');
+        外部联结
+        SELECT customers.cust_id,order.order_num FROM customer LEFT OUTER JOIN orders ON customer.cust_id=orders.cust_id;
+     3、使用带聚集函数的联结
+        SELECT customers.cust_name,customer,cust_id,COUNT(orders.order_num) AS num_ord FROM customers INNER JOIN orders ON customers.cust.id=orders.cust.id GROUP BY customers.cust_id;
+##  17、组合查询
+     1、组合查询
+        多数SQL查询都只包含从一个或多个表中返回数据的单条SELECT语句。
+        在单个查询中从不同的表返回类似结构的数据
+        对单个表执行多个查询，按单个查询返回数据                                          
+     2、创建组合查询
+        1、使用UNION
+        SELECT vend_id,prod_id,prod_price FROM products WHERE prod_price<= 5
+        UNION
+        SELECT vend_id,prod_id,prod_price FROM products WHERE vend_id IN (1001,1002);
+        
+        UNION的规则：
+            UNION必须有两天或者以上的SELECT 语句组成，语句之间用UNION隔开。
+            UNION 中的每个查询必须包含相同的列，表达式或聚集函数。
+            列数据类型必须兼容：类型不必完全相同，但必须可以隐含的转化的类型。   
+        UNION从查询结果集中会自动去除了重复的行，UNION ALL 不会去除重复的记录。
+        
+## 18、全文本搜索
+      1、理解全文本搜索
+                     
