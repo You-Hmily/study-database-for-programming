@@ -319,4 +319,120 @@
         
 ## 18、全文本搜索
       1、理解全文本搜索
-                     
+         常用引擎为MyISAM和InnoDB，前者支持全文本搜索，后者不支持。
+      2、使用全文本搜索
+         Match()和Against()一起可以实际执行。
+         启用全文本搜索支持：
+         CREATE TABLE productnotes（
+            note_id int NOT NULL AUTO_INCREMENT,
+            note_text text NULL,
+            PRIMARY KEY (note_id),
+            FULLTEXT(note_text)
+         ) ENGINE=MyISAM;
+         进行全文本搜索：
+         SELECT note_text FROM productnotes WHERE Match(note_text) Against('rabbit');
+## 19、插入数据
+      1、插入完整行
+         INSERT INTO customers 
+         VALUES (NULL,
+            'Pep E. LaPew',
+            '100 Main Street',
+            100,
+            NULL);         
+         
+         INSERT INTO customers(cust_name,
+            cust_contact,
+            cust_email,
+            cust_zip) 
+         VALUES (NULL,
+                 'Pep E. LaPew',
+                 '100 Main Street',
+                  100,
+                  NULL);     
+      2、插入多行数据
+         INSERT INTO customers(cust_name,
+                     cust_contact,
+                     cust_email,
+                     cust_zip) 
+                  VALUES (NULL,
+                          'Pep E. LaPew',
+                          '100 Main Street',
+                          100,
+                          NULL),
+                     (NULL,
+                       'Pep E. LaPew',
+                       '100 Main Street',
+                       100,
+                       NULL);
+      3、插入查询出的数据
+         INSERT INTO customers(cust_id,
+                     cust_conatct)
+                SELECT cust_id,cust_contact FROM custnew;
+## 20、更新和删除数据
+    1、更新数据
+       UPDATE customers SET cust_email ='elmer@fudd.com' WHERE cust_id=10005;
+    2、删除数据
+       DELETE FROM customer WHERE cust_id=10005;
+## 21、创建表和操纵表
+     1、创建表
+     CREATE TABLE customer(
+        cust_id int NOT NULL AUTO_INCREMENT.
+        cust_name char(50)
+        PRIMARY KEY(cust_id)
+        ) ENGINE=InnoDB;
+     2、更新表
+        加一列：ALTER TABLE vendors ADD vend_phone CHAR(20);
+        删除列：ALTER TABLE vendors DROP vend_phone;
+        
+     3、删除表
+        DROP TABLE customers2;
+     4、重命名表
+        RENAME TABLE customers2 TO customers;         
+## 22、使用视图
+     1、     
+##23、使用存储过程
+     1、存储过程
+        就是为了以后的使用而保存的一条或者多条MySQL语句的集合。可将其视为批文件处理。
+     2、为什么使用存储过程？
+        简化复杂操作，保证数据的完整性，简化对变动的管理，提高性能，更灵活更强。
+     3、使用存储过程
+        执行存储过程：CALL productpricing(@pricelow,
+                                          @priceheight,
+                                          @priceaverage
+                                          );
+        创建存储过程：
+        CREATE PROCEDURE productpricing()
+        BEGIN 
+           SELECT AVG(prod_price) AS priceaverage FROM products;
+        END;
+        
+        删除存储过程：
+        DROP PROCEDURE productpricing;
+        
+        使用参数：
+        变量（variable）内存中一个特定的位置，用来临时存储数据。
+        CREATE PROCEDURE productpricing(
+            OUT p1 DECIMAL(8,2),
+            OUT ph DECIMAL(8,2),
+            OUT pa DECIMAL(8,2)
+        )
+        BEGIN
+           SELECT Min(prod_price)
+           INTO p1
+           FROM products;
+           SELECT Max(prod_price)
+           INTO ph
+           FROM products;
+           SELECT AVG(prod_price)
+           INTO ph
+           FROM products;
+        END;
+        
+        CALL productpricing(@pricelow,@priceheigh,@priceaverage);
+        
+        检查存储过程：SHOW CREATE PROCEDURE ordertotal1;
+##24、使用游标
+    1、游标
+    2、使用游标
+    3、   
+                                                                                                                                             
