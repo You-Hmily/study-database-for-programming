@@ -433,6 +433,131 @@
         检查存储过程：SHOW CREATE PROCEDURE ordertotal1;
 ##24、使用游标
     1、游标
+       游标（cursor）是一个存储哎MySQL服务器上的数据库查询，它不是一条SELECT语句，而是被该语句检索出来的结果集。在存储了游标之后，应用程序可以根据需要滚动或浏览其中的数据。
+        
     2、使用游标
-    3、   
-                                                                                                                                             
+       创建游标
+       CREATE PROCEDURE processorers()
+       BEGIN
+          DECLARE ordernumbers CURSOR 
+          FOR 
+          SELECT order_num FROM orders;
+       END;
+       
+       打开和关闭游标
+       OPEN ordernumbers;
+       CLOSE ordernumbers;
+       
+       使用游标数据
+       从游标检索单个行
+       CREATE PROCEDURE processorders()
+       BEGIN
+         DECLARE o INT;
+         
+         DECLARE ordernumbers CURSOR;
+         FOR
+         SELECT order_num FROM orders;
+         
+         OPEN ordernumbers;
+         
+         FETCH ordernumbers INTO o;
+         
+         CLOSE ordernumbers;
+         
+       END;
+## 25、使用触发器
+    1、触发器
+       触发器是MySQL响应以下任意语句而自动执行的一条MySQL语句：
+           DELETE,INSERT,UPDATE
+    2、创建触发器
+       CREATE TRIGGER newproduct AFTER INSTER ON products FOR EACH ROW SELECT 'Product added';
+    3、删除触发器
+       DROP TRIGGER newproduct;
+    4、使用触发器
+       INSERT 触发器
+       CREATE TRIGGER neworder AFTER INSERT ON orders FOR EACH ROW SELECT NEW.order_num;
+       
+       INSERT INTO orders(order_date,cust_id) VALUES (NOW(),10001);
+       
+       DELETE触发器
+       CREATE TRIGGER deleteorder BEFORE DELETE ON orders FOR EACH ROW 
+       BEGIN 
+          INSERT INTO archive_orders(order_num,order_date,cust_id)
+          VALUES (OLD.order_num,OLD.order_date,OLD.cust_id);
+       END;
+       
+       UPDATE 触发器
+       CREATE TRIGGER updatevendor BEFORE UPDATE ON vendors
+       FOR EACH ROW SET NEW.vend_state=Upper(NEW.vend_state);
+##26、管理事务处理
+      1、事务处理
+         事务处理(transaction processing) 可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。
+         事务（transaction）指一组SQL语句；
+         回退（rollback）指撤销指定SQL语句的过程；
+         提交（commit）指将未存储的SQL语句结果写入数据库表；
+         保留点（savepoint）指事务处理中设置的临时占位符（placeholder），你可以对它发布回退。
+      2、控制事务处理
+         使用ROLLBACK
+         SELECT * FROM ordertotals;
+         START TRANSACTION;
+         DELETE FROM ordertotals;
+         SELECT * FROM ordertotals;
+         ROLLBACK;
+         SELECT * FROM ordertotals;
+         
+         使用COMMIT
+         START TRANSACTION;
+         DELETE FROM orderitems WHERE order_num=20010;
+         DELETE FROM orders WHERE order_num=20010;
+         COMMIT;
+         
+         使用保留点
+         SAVEPOINT delete1;
+         ROLLBACK TO delete1;
+         
+         更改为默认提交
+         SET autocommit=0; 
+## 27、全球化与本地化
+## 28、安全管理
+     1、访问控制
+     2、管理用户
+        创建用户账号
+        CREATAE USER ben IDENTIFIED BY 'p@$$wOrd';
+        账号重命名
+        RENAME USER ben TO bforta;
+        
+        删除用户账号
+        DROP USER bforta;
+        
+        设置访问权限
+        GRANT SELECT ON crashcourse.* TO bforta;
+        查询权限
+        SHOW GRANT FOR bforta;
+        撤销特定权限
+        REVOKE SELECT ON crashcourse.* FROM bforta;
+        
+        更改口令
+        SET PASSWARD FOR bforta = Password('n3w p@$$wOrd');
+## 29、数据库维护
+     1、备份数据
+        mysqldump 转储所有数据库内容到某个外部文件。
+        BACKUP TABLE / SELECT OUTFILE转储所有数据到某个外部文件。
+     2、进行数据库维护
+        ANALYZE TABLE 用来检查表键是否正确。
+        ANALYZE TABLE orders;
+        
+        CHECH TABLE 用来针对许多问题对表进行检查
+        CHECK TABLE orders，orderitems;
+     3、争端启动问题
+        --help显示帮助---一个选项列表
+        --safe-mode装载减去某些最佳配置的服务器
+        --verbose显示全文本信息
+        --version显示版本信息然后退出                                                                                                                                                                                              
+     4、查看日志文件
+        错误日志，它包含启动和关闭问题以及任意关键错误的细节。日志名通常为hostname.err，位于data目录中。日志名可用--log-error命令进行更改
+        查询日志，它记录所有MySQL活动。日志名通常为hostname.log，位于data目录中。日志名可以--log命令进行更改。
+        二进制日志，它记录更新过数据的所有语句。日志名通常为hostname-bin，位于data目录内，日志名可以用--log-bin命令更改。
+        缓慢查询日志，它记录执行缓慢的任何查询。日志名通常为hostname-slow.log，位于data目录中，日志名可以用--log-slow-queries命令更改。 
+## 30、改善性能
+     1、        
+          
