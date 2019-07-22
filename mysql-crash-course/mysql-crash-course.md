@@ -1,5 +1,5 @@
-#MySQL必知必会
-##1、了解数据库
+# MySQL必知必会
+## 1、了解数据库
     1.数据库基础
           数据库（database）：保存有组织的数据的容器（通常是一个文件或文件组）。
           表（table）：某种特定类型的数据的结构化清单。
@@ -16,7 +16,7 @@
               2、SQL简单易学。它的语句全都是由描述性很强的英语单词组成，而且这些单词的数目不多。
               3、SQL尽管看上去很简单，但实际上是一种强有力的语言，灵活使其语言元素，可以进行复杂和高级的数据库操作。
               
-##2、MySQL数据库简介
+## 2、MySQL数据库简介
     1、什么是MySQL：MySQL是一种DBMS(数据库管理系统)，即它是一种数据库软件
        使用MySQL的原因：
            1、成本--开源软件，免费使用。
@@ -34,7 +34,7 @@
               
            3、MySQL Query Browser 
            
-##3、使用MySQL
+## 3、使用MySQL
     1、连接
     2、选择数据库
        关键字（key word）：作为MySQL语言组成部分的一个保留字。决不要用关键字命名一个表或列。
@@ -48,7 +48,7 @@
        显示授予用户的安全权限：SHOW GRANTS
        显示服务器错误或者警告：SHOW ERRORS 和 SHOW WARNING
        
-##4、检索数据
+## 4、检索数据
     1、SELECT语句
        SELECT * FROM TEST
     2、检索单个列
@@ -69,7 +69,7 @@
        SELECT products.prod_name FROM crashcourse.products;
     
        
-##5、排序检索数据
+## 5、排序检索数据
     1、排序数据
     SELECT prod_name FROM products ORDER BY prod_name;
     2、按多个列排序
@@ -78,7 +78,7 @@
     SELECT prod_id,prod_price,prod_name FROM prosucts ORDER BY prod_price DESC;
     SELECT prod_id,prod_price,prod_name FROM prosucts ORDER BY prod_price DESC,prod_name;
     
-##6、过滤数据
+## 6、过滤数据
     1、使用WHERE子句
     SELECT prod_name,prod_price FROM products WHERE prod_price=2.50;
     
@@ -98,7 +98,7 @@
        空值检查： NULL 无值，它与字段包含0、空字符串或仅仅包含空格不同
                  SELECT prod_name FROM products WHERE prod_price IS NULL;
 
-##7、数据过滤
+## 7、数据过滤
     1、组合 WHERE 子句
        AND 操作符 ：SELECT prod_id,prod_price,prod_name FROM products WhHERE vend_id=1003 AND prod_price<=10;
        OR 操作符：SELECT prod_id,prod_price,prod_name FROM products WhHERE vend_id=1002 OR vend_id=1003;
@@ -108,7 +108,7 @@
     3、NOT 操作符 ---否定之后所跟的任何条件。
        SELECT prod_name,prod_price FROM products WHERE vend_in NOT IN (1002,1003) ORDER BY prod_name;
        MySQL支持使用 NOT 对 IN、BETWEEN 和 EXISTS 子句取反。                        
-##8、用通配符进行过滤
+## 8、用通配符进行过滤
     1、LIKE 操作符
        百分号（%）通配符：SELECT prod_id,prod_name FROM products WHERE prod_name LIKE 'jet%';// 以jet开头。匹配多个字符。
                           SELECT prod_id,prod_name FROM products WHERE prod_name LIKE '%anvil%';
@@ -118,7 +118,7 @@
        1、不要过度使用通配符，该操作能替代的情况下少用。
        2、在确实需要使用通配符时，除非绝对有必要，否则不要把它们用到在搜索模式的开始处。
        3、仔细注意通配符的位置。
-##9、用正则表达式进行搜索
+## 9、用正则表达式进行搜索
      1、正则表达式的使用
          基本字符通配 REGEXP '1000'
            SELECT prod_name FROM products WHERE prod_name REGEXP '1000' ORDER BY prod_name;
@@ -162,7 +162,7 @@
              [[:<:]]：词的开始
              [[:>:]]：词的结尾
              SELECT prod_name FROM products WHERE prod_name REFEXP '^[0-9\\.]';
-##10、创建计算字段
+## 10、创建计算字段
     1、计算字段
        字段（field）基本上与列（column）意思相同。
        计算字段并不存在于数据库表中。计算字段是运行时在SELECT语句内创建的。
@@ -175,7 +175,7 @@
        SELECT prod_id,quantity,item_price,quantity*item_price AS expended_price FROM orderitems WHERE order_num=20005;
         + ：加，- ：减，* ：乘，/ ：除 。
        
-##11、使用数据处理函数
+## 11、使用数据处理函数
     1、文本处理函数
        SELECT vend_name,Upper(vend_name) AS vend_name_upcase FROM vendors ORDER BY vend_name;
        Left()：返回串左边的字符
@@ -211,7 +211,7 @@
         Sin()： 返回一个角度的正弦
         Sqrt()：返回一个数的平方根
         Tan()： 返回一个角度的正切                                         
- ##12、汇总数据   
+## 12、汇总数据   
      1、聚集函数
      聚集函数（aggregate function）运行在行组上，计算和返回单个值的函数。
      AVG()： 返回某列的平均数
@@ -390,7 +390,7 @@
         RENAME TABLE customers2 TO customers;         
 ## 22、使用视图
      1、     
-##23、使用存储过程
+## 23、使用存储过程
      1、存储过程
         就是为了以后的使用而保存的一条或者多条MySQL语句的集合。可将其视为批文件处理。
      2、为什么使用存储过程？
@@ -431,7 +431,7 @@
         CALL productpricing(@pricelow,@priceheigh,@priceaverage);
         
         检查存储过程：SHOW CREATE PROCEDURE ordertotal1;
-##24、使用游标
+## 24、使用游标
     1、游标
        游标（cursor）是一个存储哎MySQL服务器上的数据库查询，它不是一条SELECT语句，而是被该语句检索出来的结果集。在存储了游标之后，应用程序可以根据需要滚动或浏览其中的数据。
         
@@ -489,7 +489,7 @@
        UPDATE 触发器
        CREATE TRIGGER updatevendor BEFORE UPDATE ON vendors
        FOR EACH ROW SET NEW.vend_state=Upper(NEW.vend_state);
-##26、管理事务处理
+## 26、管理事务处理
       1、事务处理
          事务处理(transaction processing) 可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。
          事务（transaction）指一组SQL语句；
